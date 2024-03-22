@@ -50,40 +50,38 @@
 //   return result;
 // };
 
-const cloudinary = require('cloudinary').v2;
-const { promisify } = require('util');
-const fs = require('fs');
+const cloudinary = require("cloudinary").v2;
+const { promisify } = require("util");
+const fs = require("fs");
 const unlinkFile = promisify(fs.unlink);
-
-
 
 // Upload file to Cloudinary
 exports.uploadFile = (file) => {
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
-  
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: 'uploads' },
-      (error, result) => {
-        if (result) {
-          console.log(result)
-          resolve(result);
-        } else {
-          reject(error);
-        }
-      }
-    );
-    fs.createReadStream(file.path).pipe(stream);
-  });
+	cloudinary.config({
+		cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+		api_key: process.env.CLOUDINARY_API_KEY,
+		api_secret: process.env.CLOUDINARY_API_SECRET,
+	});
+
+	return new Promise((resolve, reject) => {
+		const stream = cloudinary.uploader.upload_stream(
+			{ folder: "uploads" },
+			(error, result) => {
+				if (result) {
+					console.log(result);
+					resolve(result);
+				} else {
+					reject(error);
+				}
+			}
+		);
+		fs.createReadStream(file.path).pipe(stream);
+	});
 };
 
 // Get file from Cloudinary
 exports.getFileStream = async (fileKey) => {
-  const result = await cloudinary.api.resource(fileKey);
-  const stream = cloudinary.api.resource_stream(fileKey);
-  return stream;
+	const result = await cloudinary.api.resource(fileKey);
+	const stream = cloudinary.api.resource_stream(fileKey);
+	return stream;
 };

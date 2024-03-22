@@ -1,12 +1,12 @@
 const asyncHandler = require("../middlewares/asyncHandler");
 const Product = require("../models/productModel");
+const { cloudinaryUpload } = require("../utils/cloudinary");
 
 // @desc Fetch all Products
 // @route GET /api/products
 // @access Public
 
 const getProducts = asyncHandler(async (req, res) => {
-	// console.log(req)
 	const products = await Product.find({});
 	res.json(products);
 });
@@ -28,11 +28,12 @@ const getProductsById = asyncHandler(async (req, res) => {
 // @access Private/Admin
 
 const createProduct = asyncHandler(async (req, res) => {
+	console.log("create");
 	console.log(req.body);
 	const product = new Product({
 		name: "Sample name",
 		price: 0,
-		user: req.user._id,
+		user: req.user.id,
 		image: "/images/sample.jpg",
 		brand: "Sample brand",
 		countInStock: 0,
@@ -53,6 +54,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 	const { name, price, description, image, brand, countInStock } =
 		req.body;
 	console.log(req.body);
+	const cloudinaryUrl = console.log(cloudinaryUrl);
 	const product = await Product.findById(req.params.id);
 	if (product) {
 		product.name = name;

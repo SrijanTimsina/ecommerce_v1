@@ -6,8 +6,10 @@ const multer = require("multer");
 const socketio = require("./socket");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDoc = require("./documentation/swaggerSetup");
+const cookieParser = require("cookie-parser");
 
 const app = express();
+app.use(cookieParser());
 const server = createServer(app);
 const io = socketio.init(server);
 const adIo = socketio.initAdIo(server, "/socket/adpage");
@@ -29,7 +31,7 @@ app.use((req, res, next) => {
 });
 
 // Documentation setup
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Default route
 app.get("/", (req, res, next) => {

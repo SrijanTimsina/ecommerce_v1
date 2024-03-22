@@ -8,8 +8,10 @@ import ad from "./reducers/ad";
 import { apiSlice } from "./slices/apiSlices";
 import cartSliceReducer from "./slices/cartSlice";
 import authSliceReducer from "./slices/authSlice";
+import setAuthToken from "./utils/setAuthToken";
 
 const initialState = {};
+console.log(apiSlice.middleware);
 const middleware = [thunk, apiSlice.middleware];
 const rootReducer = combineReducers({
 	auth,
@@ -19,6 +21,10 @@ const rootReducer = combineReducers({
 	cartSliceReducer,
 	authSliceReducer,
 });
+
+const localStorageMiddleware = () => {
+	if (localStorage.token) setAuthToken(localStorage.token);
+};
 
 const store = configureStore({
 	reducer: {
@@ -30,6 +36,7 @@ const store = configureStore({
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(apiSlice.middleware),
+
 	devTools: true,
 });
 

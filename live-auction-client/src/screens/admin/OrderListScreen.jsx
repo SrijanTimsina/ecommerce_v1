@@ -6,38 +6,39 @@ import Loader from "../../components/Loader";
 import { useGetOrdersQuery } from "../../slices/ordersApiSlice";
 
 const OrderListScreen = () => {
-  const { data: orders, isLoading, error } = useGetOrdersQuery();
-  console.log(orders);
-  if (isLoading) {
-    return <Loader />;
-  }
+	const { data: orders, isLoading, error } = useGetOrdersQuery();
+	console.log(orders);
+	if (isLoading) {
+		return <Loader />;
+	}
 
-  if (error) {
-    return <Message variant="danger">{error}</Message>;
-  }
+	if (error) {
+		return <Message variant="danger">{error}</Message>;
+	}
 
-  // Ensure orders is an array before mapping over it
-  if (!Array.isArray(orders)) {
-    return <Message variant="danger">Orders data is invalid.</Message>;
-  }
+	// Ensure orders is an array before mapping over it
+	if (!Array.isArray(orders)) {
+		return (
+			<Message variant="danger">Orders data is invalid.</Message>
+		);
+	}
 
-
-  return (
-    <>
-      <h1>Orders</h1>
-      <Table striped bordered hover responsive className="table-sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>USER</th>
-            <th>DATE</th>
-            <th>TOTAL</th>
-            <th>PAID</th>
-            <th>DELIVERED</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
+	return (
+		<>
+			<h1>Orders</h1>
+			<Table striped bordered hover responsive className="table-sm">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>USER</th>
+						<th>DATE</th>
+						<th>TOTAL</th>
+						<th>PAID</th>
+						<th>DELIVERED</th>
+						<th></th>
+					</tr>
+				</thead>
+				{/* <tbody>
           {orders &&
             orders.map((order) => (
               <tr key={order._id}>
@@ -68,9 +69,9 @@ const OrderListScreen = () => {
                 </td>
               </tr>
             ))}
-        </tbody>
-      </Table>
-    </>
-  );
+        </tbody> */}
+			</Table>
+		</>
+	);
 };
 export default OrderListScreen;
