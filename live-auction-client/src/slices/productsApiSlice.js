@@ -6,6 +6,9 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 		getProducts: builder.query({
 			query: () => ({
 				url: PRODUCTS_URL,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			providesTags: ["Product"],
 			keepUnusedDatafor: 5,
@@ -13,6 +16,9 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 		getProductDetails: builder.query({
 			query: (productId) => ({
 				url: `${PRODUCTS_URL}/${productId}`,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			keepUnusedDataFor: 5,
 		}),
@@ -20,7 +26,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 			query: (data) => ({
 				url: `${PRODUCTS_URL}`,
 				method: "POST",
-				body: { ...data, token: localStorage.token },
+				body: { ...data },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			invalidatesTags: ["Product"],
 		}),
@@ -28,7 +37,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 			query: (data) => ({
 				url: `${PRODUCTS_URL}/${data.productId}`,
 				method: "PUT",
-				body: { ...data, token: localStorage.token },
+				body: { ...data },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			invalidatesTags: ["Products"],
 		}),
@@ -36,7 +48,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 			query: (data) => ({
 				url: `${UPLOAD_URL}`,
 				method: "POST",
-				body: { ...data, token: localStorage.token },
+				body: { file: data.image },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 		}),
 		deleteProduct: builder.mutation({
@@ -44,6 +59,9 @@ export const productsApiSlice = apiSlice.injectEndpoints({
 				url: `${PRODUCTS_URL}/${productId}`,
 				method: "DELETE",
 				body: { token: localStorage.token },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 		}),
 	}),

@@ -10,7 +10,10 @@ const {
 
 const isAuth = require("../middlewares/isAuth");
 
-router.route("/").get(getProducts).post(isAuth, createProduct);
+router
+	.route("/")
+	.get(isAuth, getProducts)
+	.post(isAuth, createProduct);
 router
 	.route("/:id")
 	.get(getProductsById)

@@ -53,8 +53,6 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
 	const { name, price, description, image, brand, countInStock } =
 		req.body;
-	console.log(req.body);
-	const cloudinaryUrl = console.log(cloudinaryUrl);
 	const product = await Product.findById(req.params.id);
 	if (product) {
 		product.name = name;

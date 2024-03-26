@@ -68,9 +68,9 @@ exports.login = async (req, res, next) => {
 
 				res
 					.status(200)
-					.cookie("token", token, {
+					.cookie("token", "token", {
+						expires: new Date(Date.now() + 25800000),
 						httpOnly: true,
-						maxAge: 3600000,
 					})
 					.json({ token });
 			}

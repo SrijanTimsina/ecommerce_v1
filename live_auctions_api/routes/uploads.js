@@ -16,6 +16,7 @@ router.post(
 	async (req, res) => {
 		const file = req.file;
 		console.log(file);
+		console.log(req.body);
 		try {
 			const result = await uploadFile(file);
 			await unlinkFile(file.path);

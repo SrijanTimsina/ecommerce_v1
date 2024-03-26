@@ -8,12 +8,18 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 				url: ORDERS_URL,
 				method: "POST",
 				body: { ...order, token: localStorage.token },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 		}),
 		getOrderDetails: builder.query({
 			query: (id) => ({
 				url: `${ORDERS_URL}/${id}`,
 				body: { token: localStorage.token },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			keepUnusedDataFor: 5,
 		}),
@@ -22,17 +28,26 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 				url: `${ORDERS_URL}/${orderId}/pay`,
 				method: "PUT",
 				body: { ...details, token: localStorage.token },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 		}),
 		getPaypalClientId: builder.query({
 			query: () => ({
 				url: PAYPAL_URL,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			keepUnusedDataFor: 5,
 		}),
 		getMyOrders: builder.query({
 			query: () => ({
 				url: `${ORDERS_URL}/mine`,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			keepUnusedDataFor: 5,
 			body: { token: localStorage.token },
@@ -40,6 +55,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 		getOrders: builder.query({
 			query: () => ({
 				url: ORDERS_URL,
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 			keepUnusedDataFor: 5,
 			body: { token: localStorage.token },
@@ -49,6 +67,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 				url: `${ORDERS_URL}/${orderId}/deliver`,
 				method: "PUT",
 				body: { token: localStorage.token },
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
 			}),
 		}),
 	}),

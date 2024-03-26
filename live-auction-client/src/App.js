@@ -29,6 +29,7 @@ import { loadUser } from "./actions/auth";
 // Redux
 import { Provider } from "react-redux";
 import store from "./store";
+import CartScreen from "./screens/CartScreen";
 
 function App() {
 	// Load user
@@ -54,6 +55,7 @@ function App() {
 					<Route path="/payment" element={<PaymentScreen />} />
 					<Route path="/placeorder" element={<PlaceOrderScreen />} />
 					<Route path="/order/:id" element={<OrderScreen />} />
+					<Route path="/cart" element={<CartScreen />} />
 
 					<Route
 						path="/admin/orderlist"

@@ -7,6 +7,7 @@ const socketio = require("./socket");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDoc = require("./documentation/swaggerSetup");
 const cookieParser = require("cookie-parser");
+var cors = require("cors");
 
 const app = express();
 app.use(cookieParser());
@@ -19,19 +20,7 @@ const upload = multer({ dest: "uploads/" });
 app.use(express.json());
 
 // CORS
-
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader(
-		"Access-Control-Allow-Methods",
-		"OPTIONS, GET, POST, PUT, PATCH, DELETE"
-	);
-	res.setHeader("Access-Control-Allow-Headers", "*");
-	next();
-});
-
-// Documentation setup
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use(cors());
 
 // Default route
 app.get("/", (req, res, next) => {

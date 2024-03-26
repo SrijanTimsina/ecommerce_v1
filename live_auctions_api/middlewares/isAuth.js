@@ -1,11 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
-	const token = req.get("x-auth-token") || req.body.token;
-	// console.log(token);
-	// If no token
-	const cookie = req.cookies;
-	// console.log(cookie);
+	const token =
+		req.get("x-auth-token") ||
+		req.header("Authorization")?.replace("Bearer ", "");
 	if (!token) {
 		return res
 			.status(401)
