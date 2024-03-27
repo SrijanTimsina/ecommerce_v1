@@ -22,6 +22,7 @@ exports.addAd = async (req, res, next) => {
 		category,
 		description,
 	} = req.body;
+	console.log(category);
 	if (duration === null || duration === 0) duration = 300;
 	if (duration > 10800) duration = 3600;
 	const timer = duration;
@@ -35,7 +36,7 @@ exports.addAd = async (req, res, next) => {
 			duration,
 			timer,
 			image,
-			category,
+			category: category,
 			owner: req.user.id,
 		});
 
@@ -44,6 +45,7 @@ exports.addAd = async (req, res, next) => {
 		room = await room.save();
 
 		ad.room = room._id;
+		console.log(ad);
 		ad = await ad.save();
 		console.log(room);
 		const user = await User.findById(ad.owner);

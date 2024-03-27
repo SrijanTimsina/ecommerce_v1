@@ -28,17 +28,17 @@ const getProductsById = asyncHandler(async (req, res) => {
 // @access Private/Admin
 
 const createProduct = asyncHandler(async (req, res) => {
-	console.log("create");
 	console.log(req.body);
 	const product = new Product({
-		name: "Sample name",
+		name: "",
 		price: 0,
 		user: req.user.id,
-		image: "/images/sample.jpg",
-		brand: "Sample brand",
+		image: "",
+		brand: "",
 		countInStock: 0,
 		numReviews: 0,
-		description: "Sample description",
+		description: "",
+		category: "",
 	});
 	if (req.body[0] == true) {
 		product.thrift = true;
@@ -51,8 +51,15 @@ const createProduct = asyncHandler(async (req, res) => {
 // @access Private/Admin
 
 const updateProduct = asyncHandler(async (req, res) => {
-	const { name, price, description, image, brand, countInStock } =
-		req.body;
+	const {
+		name,
+		price,
+		description,
+		image,
+		brand,
+		countInStock,
+		category,
+	} = req.body;
 	const product = await Product.findById(req.params.id);
 	if (product) {
 		product.name = name;
@@ -61,6 +68,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 		product.image = image;
 		product.brand = brand;
 		product.countInStock = countInStock;
+		product.category = category;
 
 		const updatedProduct = await product.save();
 		res.json(updatedProduct);

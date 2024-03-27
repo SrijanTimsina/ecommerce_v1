@@ -16,29 +16,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
 		shippingPrice,
 		totalPrice,
 	} = req.body;
-
-	if (orderItems && orderItems.length !== 0) {
-		orderItems.map(async (item) => {
-			if (item.thrift) {
-				const product = await Product.findById(item._id);
-				const user = await User.findById(product.user);
-				let currentOrders = [];
-				if (user.thriftOrders) {
-					currentOrders = user.thriftOrders;
-				}
-				currentOrders.push({
-					name: item.name,
-					qty: item.qty,
-					totalPrice: item.qty * item.price,
-				});
-				console.log(currentOrders);
-				user.thriftOrders = currentOrders;
-				console.log(user);
-				await user.save();
-			}
-		});
-	}
-
 	if (orderItems && orderItems.length === 0) {
 		res.status(400);
 		throw new Error("No order item");
@@ -49,7 +26,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 				product: x._id,
 				_id: undefined,
 			})),
-			user: req.user._id,
+			user: req.user.id,
 			shippingAddress,
 			paymentMethod,
 			itemsPrice,

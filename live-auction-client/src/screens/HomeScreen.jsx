@@ -14,7 +14,7 @@ const HomeScreen = () => {
 	} = useGetProductsQuery();
 	useEffect(() => {
 		refetch();
-	}, []);
+	}, [products]);
 	return (
 		<>
 			{isLoading ? (
