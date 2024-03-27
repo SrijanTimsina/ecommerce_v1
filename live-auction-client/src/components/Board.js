@@ -38,6 +38,8 @@ const Board = (props) => {
 		refetch,
 		error,
 	} = useGetProductsQuery();
+	let productsArr = [];
+	const categoryObj = {};
 	useEffect(() => {
 		if (props.passedUser) {
 			props.loadAds(props.passedUser);
@@ -75,8 +77,24 @@ const Board = (props) => {
 
 	useEffect(() => {
 		refetch();
-		console.log(products);
-		console.log(props.ads);
+		if (products) {
+			const joinedArr = products.concat(props.ads);
+			// console.log(joinedArr);
+			joinedArr.forEach((el) => {
+				const category = el.category;
+				if (categoryObj[category]) {
+					categoryObj[category] = [...categoryObj[category], el];
+				} else {
+					categoryObj[category] = [el];
+				}
+			});
+			for (const category in categoryObj) {
+				productsArr.push({
+					category: category,
+					products: categoryObj[category],
+				});
+			}
+		}
 	}, [products, props.ads]);
 
 	// Check if user is logged

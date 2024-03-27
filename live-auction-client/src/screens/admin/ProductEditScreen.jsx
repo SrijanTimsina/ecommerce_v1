@@ -16,7 +16,7 @@ const ProductEditScreen = () => {
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
 	const [image, setImage] = useState("");
-	const [brand, setBrand] = useState("");
+	const [category, setCategory] = useState("");
 	const [countInStock, setCountInStock] = useState(0);
 	const [description, setDescription] = useState("");
 
@@ -40,7 +40,7 @@ const ProductEditScreen = () => {
 				name,
 				price,
 				image,
-				brand,
+				category,
 				description,
 				countInStock,
 			}).unwrap(); // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
@@ -56,7 +56,7 @@ const ProductEditScreen = () => {
 			setName(product.name);
 			setPrice(product.price);
 			setImage(product.image);
-			setBrand(product.brand);
+			setCategory(product.category);
 			setCountInStock(product.countInStock);
 			setDescription(product.description);
 		}
@@ -125,14 +125,21 @@ const ProductEditScreen = () => {
 							></Form.Control>
 						</Form.Group>
 
-						<Form.Group controlId="brand" className="my-2">
-							<Form.Label>Brand</Form.Label>
-							<Form.Control
-								type="text"
-								placeholder="Enter Brand"
-								value={brand}
-								onChange={(e) => setBrand(e.target.value)}
-							></Form.Control>
+						<Form.Group controlId="category" className="my-2">
+							<Form.Label>Category</Form.Label>
+							<select
+								name="cars"
+								id="cars"
+								form="carform"
+								onChange={(e) => setCategory(e.target.value)}
+								value={category}
+								className="col-12 p-2"
+							>
+								<option value="Electronics">Electronics</option>
+								<option value="Food">Food</option>
+								<option value="Clothes">Clothes</option>
+								<option value="Others">Others</option>
+							</select>
 						</Form.Group>
 
 						<Form.Group controlId="countInStock" className="my-2">

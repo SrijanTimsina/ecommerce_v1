@@ -85,7 +85,6 @@ const ProductListScreen = ({ id }) => {
 								<th>NAME</th>
 								<th>PRICE</th>
 								<th>CATEGORY</th>
-								<th>BRAND</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -96,7 +95,7 @@ const ProductListScreen = ({ id }) => {
 										<td>{product._id}</td>
 										<td>{product.name}</td>
 										<td>${product.price}</td>
-										<td>{product.brand}</td>
+										<td>{product.category}</td>
 										<td>
 											<LinkContainer
 												to={`/admin/product/${product._id}/edit`}

@@ -28,17 +28,18 @@ const getProductsById = asyncHandler(async (req, res) => {
 // @access Private/Admin
 
 const createProduct = asyncHandler(async (req, res) => {
+	console.log("create");
 	console.log(req.body);
 	const product = new Product({
-		name: "",
+		name: "Sample name",
 		price: 0,
 		user: req.user.id,
-		image: "",
-		brand: "",
+		image: "/images/sample.jpg",
+		brand: "Sample brand",
 		countInStock: 0,
 		numReviews: 0,
-		description: "",
-		category: "",
+		description: "Sample description",
+		category: "Others",
 	});
 	if (req.body[0] == true) {
 		product.thrift = true;
