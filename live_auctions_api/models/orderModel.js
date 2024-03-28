@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
+const types = mongoose.Types;
 
 const orderSchema = mongoose.Schema(
 	{
 		user: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: types.ObjectId,
+			ref: "user",
 			required: true,
-			ref: "User",
 		},
 		orderItems: [
 			{
@@ -14,7 +15,7 @@ const orderSchema = mongoose.Schema(
 				image: { type: String, required: true },
 				price: { type: Number, required: true },
 				product: {
-					type: mongoose.Schema.Types.ObjectId,
+					type: types.ObjectId,
 					ref: "Product",
 				},
 			},

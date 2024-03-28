@@ -13,7 +13,6 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
-import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 
 //Admin
@@ -30,6 +29,8 @@ import { loadUser } from "./actions/auth";
 import { Provider } from "react-redux";
 import store from "./store";
 import CartScreen from "./screens/CartScreen";
+import AdminRoute from "./components/AdminRoute";
+import Orders from "./components/Orders";
 
 function App() {
 	// Load user
@@ -49,30 +50,31 @@ function App() {
 					<Route path="/postad" element={<AdForm />} />
 					<Route path="/dashboard" element={<Dashboard />} />
 
-					<Route path="/home" element={<HomeScreen />} />
 					<Route path="/product/:id" element={<ProductScreen />} />
 					<Route path="/shipping" element={<ShippingScreen />} />
 					<Route path="/payment" element={<PaymentScreen />} />
 					<Route path="/placeorder" element={<PlaceOrderScreen />} />
 					<Route path="/order/:id" element={<OrderScreen />} />
 					<Route path="/cart" element={<CartScreen />} />
-
-					<Route
-						path="/admin/orderlist"
-						element={<OrderListScreen />}
-					/>
-					<Route
-						path="/admin/productlist"
-						element={<ProductListScreen />}
-					/>
-					<Route
-						path="/admin/product/:id/edit"
-						element={<ProductEditScreen />}
-					/>
-					<Route
-						path="/admin/userlist"
-						element={<UserListScreen />}
-					/>
+					<Route path="/orders" element={<Orders />} />
+					<Route path="" element={<AdminRoute />}>
+						<Route
+							path="/admin/orderlist"
+							element={<OrderListScreen />}
+						/>
+						<Route
+							path="/admin/productlist"
+							element={<ProductListScreen />}
+						/>
+						<Route
+							path="/admin/product/:id/edit"
+							element={<ProductEditScreen />}
+						/>
+						<Route
+							path="/admin/userlist"
+							element={<UserListScreen />}
+						/>
+					</Route>
 				</Routes>
 			</BrowserRouter>
 		</Provider>

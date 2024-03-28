@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
+import { Typography } from "@mui/material";
+import DashboardAdList from "../../components/DashboardAdList.js";
 
 import {
 	useGetProductsQuery,
@@ -52,10 +54,10 @@ const ProductListScreen = ({ id }) => {
 	};
 
 	return (
-		<>
+		<div style={{ padding: "20px 30px" }}>
 			<Row className="align-items-center">
 				<Col>
-					<h1>Products</h1>
+					<h4>Products</h4>
 				</Col>
 				<Col className="text-end">
 					<Button className="my-3" onClick={createProductHandler}>
@@ -122,7 +124,13 @@ const ProductListScreen = ({ id }) => {
 					</Table>
 				</>
 			)}
-		</>
+			<div>
+				<Typography variant="h5" style={{ marginTop: "30px" }}>
+					Auction Products
+				</Typography>
+				<DashboardAdList />
+			</div>
+		</div>
 	);
 };
 

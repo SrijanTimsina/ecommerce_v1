@@ -84,7 +84,6 @@ const AdForm = (props) => {
 			} else {
 				// with photo
 				const imagePath = await uploadImage();
-				console.log(imagePath);
 				if (imagePath) {
 					await props.postAd({ ...form, image: imagePath });
 					navigate("/");

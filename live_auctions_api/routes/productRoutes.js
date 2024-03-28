@@ -9,15 +9,16 @@ const {
 } = require("../controllers/productController.js");
 
 const isAuth = require("../middlewares/isAuth");
+const isAdmin = require("../middlewares/isAdmin.js");
 
 router
 	.route("/")
 	.get(isAuth, getProducts)
-	.post(isAuth, createProduct);
+	.post(isAuth, isAdmin, createProduct);
 router
 	.route("/:id")
 	.get(getProductsById)
-	.put(isAuth, updateProduct)
-	.delete(isAuth, deleteProduct);
+	.put(isAuth, isAdmin, updateProduct)
+	.delete(isAuth, isAdmin, deleteProduct);
 
 module.exports = router;

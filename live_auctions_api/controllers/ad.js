@@ -22,7 +22,6 @@ exports.addAd = async (req, res, next) => {
 		category,
 		description,
 	} = req.body;
-	console.log(category);
 	if (duration === null || duration === 0) duration = 300;
 	if (duration > 10800) duration = 3600;
 	const timer = duration;
@@ -45,9 +44,7 @@ exports.addAd = async (req, res, next) => {
 		room = await room.save();
 
 		ad.room = room._id;
-		console.log(ad);
 		ad = await ad.save();
-		console.log(room);
 		const user = await User.findById(ad.owner);
 		user.postedAds.push(ad._id);
 		await user.save();
@@ -101,7 +98,6 @@ exports.findAd = async (req, res, next) => {
 			errors: errors.array(),
 		});
 	}
-	console.log(errors);
 	const adId = req.params.id; // id of type ObjectId (61a18153f926fdc2dd16d78b)
 	try {
 		const ad = await Ad.findById(adId).populate("owner", {
@@ -111,7 +107,6 @@ exports.findAd = async (req, res, next) => {
 			return res
 				.status(404)
 				.json({ errors: [{ msg: "Ad not found" }] });
-		console.log(ad);
 		res.status(200).json(ad);
 	} catch (err) {
 		console.log(err);

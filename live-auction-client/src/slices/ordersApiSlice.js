@@ -50,7 +50,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 			keepUnusedDataFor: 5,
-			body: { token: localStorage.token },
 		}),
 		getOrders: builder.query({
 			query: () => ({
@@ -60,7 +59,6 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 			keepUnusedDataFor: 5,
-			body: { token: localStorage.token },
 		}),
 		deliverOrder: builder.mutation({
 			query: (orderId) => ({
