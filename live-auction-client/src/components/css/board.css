@@ -1,8 +1,6 @@
 .product__board {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 1.2rem;
-    justify-content: center;
-    margin: 1rem;
-  }
-  
+	padding: 20px 30px;
+	width: 100%;
+	max-width: 1400px;
+	margin: 0 auto;
+}

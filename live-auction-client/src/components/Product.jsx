@@ -1,9 +1,10 @@
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 
 const product = ({ product }) => {
 	return (
-		<Card className="my-3 p-3 productCard">
+		<Card className="productCard" style={{ height: "100%" }}>
 			<Link to={`/product/${product._id}`}>
 				<Card.Img
 					src={product.image}
@@ -12,15 +13,20 @@ const product = ({ product }) => {
 				/>
 			</Link>
 
-			<Card.Body>
+			<Card.Body style={{ padding: "16px" }}>
 				<Link to={`/product/${product._id}`} className="productTitle">
-					<Card.Title as="div" className="productTitle">
+					<Typography variant="h6" component="div">
 						{product.name}
-					</Card.Title>
+					</Typography>
 				</Link>
-
-				<Card.Text className="productPrice">
-					Rs{product.price}
+				<Card.Text
+					style={{
+						color: "#f85606",
+						fontSize: "18px",
+						fontWeight: "600",
+					}}
+				>
+					Rs {product.price}
 				</Card.Text>
 			</Card.Body>
 		</Card>

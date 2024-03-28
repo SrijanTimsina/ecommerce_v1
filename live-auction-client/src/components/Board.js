@@ -16,7 +16,6 @@ import {
 	adAreaStyle,
 	boardCardStyle,
 	boardStyle,
-	paginationStyle,
 } from "./css/boardStyle";
 // Actions
 import {
@@ -27,11 +26,10 @@ import {
 import { setAlert, clearAlerts } from "../actions/alert";
 // Components
 import Spinner from "./Spinner";
-import Card from "./Card";
+import AuctionItem from "./AuctionItem";
 
 const Board = (props) => {
-	const [pageNumber, setPageNumber] = useState(1);
-	const [adPerPage] = useState(6);
+	const [allProducts, setAllProducts] = useState([]);
 	const {
 		data: products,
 		isLoading,
@@ -77,8 +75,8 @@ const Board = (props) => {
 
 	useEffect(() => {
 		refetch();
-		if (products) {
-			const joinedArr = products.concat(props.ads);
+		if (products && props.ads) {
+			const joinedArr = props.ads.concat(products);
 			// console.log(joinedArr);
 			joinedArr.forEach((el) => {
 				const category = el.category;
@@ -94,6 +92,8 @@ const Board = (props) => {
 					products: categoryObj[category],
 				});
 			}
+
+			setAllProducts(productsArr);
 		}
 	}, [products, props.ads]);
 
@@ -102,88 +102,76 @@ const Board = (props) => {
 		return <Navigate to="/login" />;
 	}
 
-	// Pagination
-	let lastAdIndex = pageNumber * adPerPage;
-	let firstAdIndex = lastAdIndex - adPerPage;
-	// Page numbers for buttons
-	let pageNumbers = [];
-	const num = Math.ceil(props.ads.length / adPerPage);
-	for (let i = 1; i <= num; i++) {
-		pageNumbers.push(i);
-	}
-	// When page number button is clicked
-	const clickPageNumberButton = (num) => {
-		setPageNumber(num);
-	};
-
 	return props.loading ? (
 		<Spinner />
 	) : (
 		<Box sx={boardStyle}>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "space-between",
+					width: "100%",
+				}}
+			>
+				<h4 style={{ color: "black" }}>Auction Products</h4>
+				<button className="viewAllBtn">VIEW ALL</button>
+			</div>
 			<Box sx={adAreaStyle}>
-				{props.ads.slice(firstAdIndex, lastAdIndex).map((ad) => {
+				{props.ads.map((ad, index) => {
+					if (index > 4) return null;
 					return ad.auctionEnded ? null : (
-						<div className="product__container" key={ad._id}>
-							<Card
-								ad={ad}
-								key={ad._id}
-								dashCard={false}
-								cardStyle={boardCardStyle}
-							/>
-						</div>
+						<AuctionItem ad={ad} key={ad._id} />
 					);
 				})}
 			</Box>
-			<Box sx={paginationStyle}>
-				<ButtonGroup variant="outlined" size="small">
-					<Button
-						disabled={pageNumber === 1}
-						onClick={(e) => clickPageNumberButton(pageNumber - 1)}
-					>
-						Prev
-					</Button>
-					{pageNumbers.map((num) => {
-						return (
-							<Button
-								key={num}
-								disabled={pageNumber === num}
-								onClick={(e) => clickPageNumberButton(num)}
+			<div>
+				{allProducts.map((categories, idx) => {
+					console.log(categories);
+					return (
+						<div key={idx}>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "space-between",
+									width: "100%",
+								}}
 							>
-								{num}
-							</Button>
-						);
-					})}
-					<Button
-						disabled={
-							pageNumber === pageNumbers[pageNumbers.length - 1]
-						}
-						onClick={(e) => clickPageNumberButton(pageNumber + 1)}
-					>
-						Next
-					</Button>
-				</ButtonGroup>
-			</Box>
-			<>
-				{isLoading ? (
-					<Loader />
-				) : error ? (
-					<Message variant="danger">
-						{error?.data?.message || error.error}
-					</Message>
-				) : (
-					<>
-						<h1>Latest shoes</h1>
-						<Row>
-							{products.map((product) => (
-								<Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-									<Product product={product} />
-								</Col>
-							))}
-							;
-						</Row>
-					</>
-				)}
-			</>
+								<h4 style={{ color: "black" }}>
+									{categories.category}
+								</h4>
+								<button className="viewAllBtn">VIEW ALL</button>
+							</div>
+							<Box sx={adAreaStyle}>
+								{categories.products.map((product, index) => {
+									if (product.room) {
+										return <AuctionItem ad={product} key={index} />;
+									} else {
+										return (
+											<Col
+												key={product._id}
+												sm={12}
+												md={6}
+												lg={4}
+												xl={3}
+											>
+												<Product product={product} />
+											</Col>
+										);
+									}
+								})}
+							</Box>
+							{/* <Box sx={adAreaStyle}>
+								{props.ads.map((ad, index) => {
+									if (index > 4) return null;
+									return ad.auctionEnded ? null : (
+										<AuctionItem ad={ad} key={ad._id} />
+									);
+								})}
+							</Box> */}
+						</div>
+					);
+				})}
+			</div>
 		</Box>
 	);
 };
