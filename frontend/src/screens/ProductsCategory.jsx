@@ -95,7 +95,7 @@ const ProductsCategory = (props) => {
 		}
 	}, [products, props.ads]);
 
-	const ascendingSort = (arr) => {
+	const ascendingSortQuick = (arr) => {
 		if (arr.length <= 1) {
 			return arr;
 		}
@@ -115,45 +115,69 @@ const ProductsCategory = (props) => {
 		}
 
 		return [
-			...ascendingSort(leftArr),
+			...ascendingSortQuick(leftArr),
 			arr[0],
-			...ascendingSort(rightArr),
+			...ascendingSortQuick(rightArr),
 		];
 	};
-	const descendingSort = (arr) => {
+
+	const descendingSortMerge = (arr) => {
 		if (arr.length <= 1) {
 			return arr;
 		}
 
-		let pivot = +arr[0].currentPrice?.$numberDecimal || arr[0].price;
-		let leftArr = [];
-		let rightArr = [];
+		const mid = Math.floor(arr.length / 2);
+		const leftArr = arr.slice(0, mid);
+		const rightArr = arr.slice(mid);
 
-		for (let i = 1; i < arr.length; i++) {
-			const price =
-				+arr[i].currentPrice?.$numberDecimal || arr[i].price;
-			if (price > pivot) {
-				leftArr.push(arr[i]);
+		const sortedLeft = descendingSortMerge(leftArr);
+		const sortedRight = descendingSortMerge(rightArr);
+
+		return merge(sortedLeft, sortedRight);
+	};
+
+	function merge(left, right) {
+		let result = [];
+		let leftIndex = 0;
+		let rightIndex = 0;
+
+		while (leftIndex < left.length && rightIndex < right.length) {
+			const leftPrice =
+				+left[leftIndex].currentPrice?.$numberDecimal ||
+				left[leftIndex].price;
+			const rightPrice =
+				+right[rightIndex].currentPrice?.$numberDecimal ||
+				right[rightIndex].price;
+
+			if (leftPrice > rightPrice) {
+				result.push(left[leftIndex]);
+				leftIndex++;
 			} else {
-				rightArr.push(arr[i]);
+				result.push(right[rightIndex]);
+				rightIndex++;
 			}
 		}
 
-		return [
-			...descendingSort(leftArr),
-			arr[0],
-			...descendingSort(rightArr),
-		];
-	};
+		while (leftIndex < left.length) {
+			result.push(left[leftIndex]);
+			leftIndex++;
+		}
+		while (rightIndex < right.length) {
+			result.push(right[rightIndex]);
+			rightIndex++;
+		}
+
+		return result;
+	}
 
 	const sortChanged = (event) => {
 		const sortingCondition = event.target.value;
 		if (sortingCondition != "") {
 			let sortedArr = [];
 			if (sortingCondition == "ascending") {
-				sortedArr = ascendingSort(allProducts.products);
+				sortedArr = ascendingSortQuick(allProducts.products);
 			} else {
-				sortedArr = descendingSort(allProducts.products);
+				sortedArr = descendingSortMerge(allProducts.products);
 			}
 			setAllProducts((prev) => {
 				return {
