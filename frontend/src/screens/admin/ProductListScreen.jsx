@@ -127,7 +127,7 @@ const ProductListScreen = (props) => {
 									<tr key={product._id}>
 										<td>{product._id}</td>
 										<td>{product.name}</td>
-										<td>${product.price}</td>
+										<td>Rs {product.price}</td>
 										<td>{product.category}</td>
 										<td>
 											<LinkContainer
@@ -197,8 +197,10 @@ const ProductListScreen = (props) => {
 										<tr key={product._id}>
 											<td>{product._id}</td>
 											<td>{product.productName}</td>
-											<td>${product.basePrice.$numberDecimal}</td>
-											<td>${product.currentPrice.$numberDecimal}</td>
+											<td>Rs {product.basePrice.$numberDecimal}</td>
+											<td>
+												Rs {product.currentPrice.$numberDecimal}
+											</td>
 											<td>{product.category}</td>
 											<td>{product.timer}</td>
 											<td>
