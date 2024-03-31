@@ -13,3 +13,8 @@ body {
 code {
 	font-family: sans-serif;
 }
+#root {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}

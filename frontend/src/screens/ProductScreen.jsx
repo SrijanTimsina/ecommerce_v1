@@ -16,6 +16,7 @@ import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
+
 const ProductScreen = () => {
 	const { id: productId } = useParams();
 
@@ -51,7 +52,7 @@ const ProductScreen = () => {
 					style={{
 						padding: "40px 20px 40px 20px",
 						boxShadow: "0 0 7px 0px #cecece",
-						margin: "30px",
+						margin: "0 30px 20px 30px",
 					}}
 				>
 					<Row>

@@ -10,6 +10,7 @@ export const boardStyle = {
 	display: "flex",
 	flexDirection: "column",
 	width: "100%",
+	marginTop: "-20px",
 };
 
 export const paginationStyle = {

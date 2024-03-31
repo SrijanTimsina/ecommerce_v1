@@ -83,7 +83,7 @@ const Nav = (props) => {
 									)}
 									<Dropdown.Item>
 										<RouterLink
-											href="#"
+											href="/login"
 											color="inherit"
 											onClick={props.logout}
 											style={{
@@ -105,7 +105,15 @@ const Nav = (props) => {
 							</RouterLink>
 						</>
 					) : (
-						<Link to="/login" style={{ textDecoration: "none" }}>
+						<Link
+							to="/login"
+							style={{
+								textDecoration: "none",
+								color: "black",
+								border: "2px solid black",
+								padding: "8px 20px",
+							}}
+						>
 							Login
 						</Link>
 					)}

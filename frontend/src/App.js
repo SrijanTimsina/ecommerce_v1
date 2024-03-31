@@ -32,6 +32,7 @@ import store from "./store.js";
 import CartScreen from "./screens/CartScreen.jsx";
 import AdminRoute from "./components/AdminRoute.js";
 import Orders from "./components/Orders.js";
+import PageNotFound from "./components/PageNotFound.js";
 
 function App() {
 	// Load user
@@ -66,20 +67,18 @@ function App() {
 							path="/products/:category"
 							element={<ProductsCategory />}
 						/>
-						<Route path="" element={<AdminRoute />}>
+						<Route path="/admin" element={<AdminRoute />}>
+							<Route path="orderlist" element={<OrderListScreen />} />
 							<Route
-								path="/admin/orderlist"
-								element={<OrderListScreen />}
-							/>
-							<Route
-								path="/admin/productlist"
+								path="productlist"
 								element={<ProductListScreen />}
 							/>
 							<Route
-								path="/admin/product/:id/edit"
+								path="product/:id/edit"
 								element={<ProductEditScreen />}
 							/>
 						</Route>
+						<Route path="*" element={<PageNotFound />} />
 					</Routes>
 				</BrowserRouter>
 			</PayPalScriptProvider>

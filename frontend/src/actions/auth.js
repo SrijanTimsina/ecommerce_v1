@@ -10,7 +10,6 @@ import {
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
 
-// Load user
 export const loadUser = () => async (dispatch) => {
 	if (localStorage.token) setAuthToken(localStorage.token);
 
@@ -29,7 +28,6 @@ export const loadUser = () => async (dispatch) => {
 	}
 };
 
-// Register user
 export const register =
 	({ name, email, password, phone, address }) =>
 	async (dispatch) => {
@@ -80,7 +78,6 @@ export const register =
 		}
 	};
 
-// Login user
 export const login = (email, password) => async (dispatch) => {
 	const config = {
 		headers: {
@@ -97,49 +94,6 @@ export const login = (email, password) => async (dispatch) => {
 			config
 		);
 		console.log(res.data);
-
-		dispatch({
-			type: LOGIN_SUCCESS,
-			payload: res.data,
-		});
-
-		// Load user
-		dispatch(loadUser());
-	} catch (err) {
-		// Get errors array sent by api
-		if (!err.response) {
-			dispatch(setAlert("Server error", "error"));
-		} else {
-			const errors = err.response.data.errors;
-			if (errors) {
-				errors.forEach((error) =>
-					dispatch(setAlert(error.msg, "error"))
-				);
-			}
-		}
-
-		dispatch({
-			type: LOGIN_FAIL,
-		});
-	}
-};
-
-// Skip login
-export const skipLogin = () => async (dispatch) => {
-	const config = {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	};
-
-	const body = { email: "test@test.com", password: "123456" };
-
-	try {
-		const res = await axios.post(
-			`${process.env.REACT_APP_API_BASE_URL}/auth`,
-			body,
-			config
-		);
 
 		dispatch({
 			type: LOGIN_SUCCESS,

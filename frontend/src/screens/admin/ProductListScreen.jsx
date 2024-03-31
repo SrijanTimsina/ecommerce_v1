@@ -85,7 +85,7 @@ const ProductListScreen = (props) => {
 	}, [props.ads]);
 
 	return (
-		<div style={{ padding: "20px 30px" }}>
+		<div style={{ padding: "0 30px 20px 30px" }}>
 			<Row className="align-items-center">
 				<Col>
 					<h4>Products</h4>

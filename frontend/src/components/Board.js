@@ -101,9 +101,12 @@ const Board = (props) => {
 							display: "flex",
 							justifyContent: "space-between",
 							width: "100%",
+							alignItems: "center",
 						}}
 					>
-						<h4 style={{ color: "black" }}>Auction Products</h4>
+						<h4 style={{ color: "black", margin: "0" }}>
+							Auction Products
+						</h4>
 						<Link
 							to={`/products/auction`}
 							sx={{ textDecoration: "none" }}
@@ -131,9 +134,10 @@ const Board = (props) => {
 									display: "flex",
 									justifyContent: "space-between",
 									width: "100%",
+									alignItems: "center",
 								}}
 							>
-								<h4 style={{ color: "black" }}>
+								<h4 style={{ color: "black", margin: 0 }}>
 									{categories.category} Products
 								</h4>
 								<Link

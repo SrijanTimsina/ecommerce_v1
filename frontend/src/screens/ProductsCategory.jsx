@@ -37,7 +37,6 @@ const ProductsCategory = (props) => {
 		} else {
 			props.loadAds();
 			const socket = openSocket(process.env.REACT_APP_API_BASE_URL);
-			// when new ad is added
 			socket.on("addAd", (data) => {
 				if (
 					props.user &&
@@ -48,7 +47,6 @@ const ProductsCategory = (props) => {
 					props.setAlert("New ads available", "info", 60000);
 				}
 			});
-			// when auction starts/ends
 			socket.on("auctionStarted", (res) => {
 				props.updateAdInList(res.data);
 			});
@@ -56,7 +54,6 @@ const ProductsCategory = (props) => {
 				props.updateAdInList(res.data);
 			});
 
-			// disconnect socket when page left
 			return () => {
 				socket.emit("leaveHome");
 				socket.off();
@@ -193,12 +190,19 @@ const ProductsCategory = (props) => {
 		<Box sx={boardStyle}>
 			<div>
 				{allProducts && allProducts.products?.length > 0 && (
-					<div style={{ padding: "30px 30px" }}>
+					<div
+						style={{
+							padding: "30px 30px",
+							margin: "0 auto",
+							width: "max-content",
+						}}
+					>
 						<div
 							style={{
 								display: "flex",
 								justifyContent: "space-between",
 								width: "100%",
+								maxWidth: "1346px",
 							}}
 						>
 							<h4 style={{ color: "black" }}>
@@ -216,7 +220,10 @@ const ProductsCategory = (props) => {
 								<option value="descending">Price High To Low</option>
 							</select>
 						</div>
-						<Box sx={adAreaStyle}>
+						<Box
+							sx={adAreaStyle}
+							style={{ marginTop: "20px", width: "max-content" }}
+						>
 							{allProducts.products &&
 								allProducts.products.length > 0 &&
 								allProducts.products.map((product, index) => {

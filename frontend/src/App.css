@@ -6,10 +6,15 @@
 	font-weight: 600;
 	cursor: pointer;
 	transition: all 200ms ease-in-out;
+	margin: 20px 0;
 }
 .viewAllBtn:hover {
 	background-color: #f85606;
 	color: white;
+}
+.btn.btn-light.my-3 {
+	width: max-content;
+	margin: 10px 0 10px 30px !important;
 }
 .card-body {
 	max-width: 250px;
