@@ -113,17 +113,17 @@ const Board = (props) => {
 					</div>
 					<Box sx={adAreaStyle}>
 						{props.ads.map((ad, index) => {
-							if (index > 4) return null;
-							return ad.auctionEnded ? null : (
-								<AuctionItem ad={ad} key={index} />
-							);
+							if (index < 5) {
+								return ad.auctionEnded ? null : (
+									<AuctionItem ad={ad} key={index} />
+								);
+							}
 						})}
 					</Box>
 				</>
 			)}
 			<div>
 				{allProducts.map((categories, idx) => {
-					if (idx > 4) return null;
 					return (
 						<div key={idx}>
 							<div
@@ -145,14 +145,16 @@ const Board = (props) => {
 							</div>
 							<Box sx={adAreaStyle}>
 								{categories.products.map((product, index) => {
-									if (product.room) {
-										return <AuctionItem ad={product} key={index} />;
-									} else {
-										return (
-											<Col key={index} sm={12} md={6} lg={4} xl={3}>
-												<Product product={product} />
-											</Col>
-										);
+									if (index < 5) {
+										if (product.room) {
+											return <AuctionItem ad={product} key={index} />;
+										} else {
+											return (
+												<Col key={index} sm={12} md={6} lg={4} xl={3}>
+													<Product product={product} />
+												</Col>
+											);
+										}
 									}
 								})}
 							</Box>

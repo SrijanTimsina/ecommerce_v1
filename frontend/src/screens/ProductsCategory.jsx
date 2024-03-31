@@ -39,7 +39,6 @@ const ProductsCategory = (props) => {
 			const socket = openSocket(process.env.REACT_APP_API_BASE_URL);
 			// when new ad is added
 			socket.on("addAd", (data) => {
-				console.log(data);
 				if (
 					props.user &&
 					data.ad.owner &&
@@ -101,12 +100,13 @@ const ProductsCategory = (props) => {
 			return arr;
 		}
 
-		let pivot = arr[0].currentPrice?.$numberDecimal || arr[0].price;
+		let pivot = +arr[0].currentPrice?.$numberDecimal || arr[0].price;
 		let leftArr = [];
 		let rightArr = [];
-		for (let i = 0; i < arr.length; i++) {
-			let price = arr[i].currentPrice?.$numberDecimal || arr[i].price;
 
+		for (let i = 1; i < arr.length; i++) {
+			const price =
+				+arr[i].currentPrice?.$numberDecimal || arr[i].price;
 			if (price < pivot) {
 				leftArr.push(arr[i]);
 			} else {
@@ -114,19 +114,24 @@ const ProductsCategory = (props) => {
 			}
 		}
 
-		return [...ascendingSort(leftArr), ...ascendingSort(rightArr)];
+		return [
+			...ascendingSort(leftArr),
+			arr[0],
+			...ascendingSort(rightArr),
+		];
 	};
 	const descendingSort = (arr) => {
 		if (arr.length <= 1) {
 			return arr;
 		}
 
-		let pivot = arr[0].currentPrice?.$numberDecimal || arr[0].price;
+		let pivot = +arr[0].currentPrice?.$numberDecimal || arr[0].price;
 		let leftArr = [];
 		let rightArr = [];
-		for (let i = 0; i < arr.length; i++) {
-			let price = arr[i].currentPrice?.$numberDecimal || arr[i].price;
 
+		for (let i = 1; i < arr.length; i++) {
+			const price =
+				+arr[i].currentPrice?.$numberDecimal || arr[i].price;
 			if (price > pivot) {
 				leftArr.push(arr[i]);
 			} else {
@@ -134,8 +139,13 @@ const ProductsCategory = (props) => {
 			}
 		}
 
-		return [...descendingSort(leftArr), ...descendingSort(rightArr)];
+		return [
+			...descendingSort(leftArr),
+			arr[0],
+			...descendingSort(rightArr),
+		];
 	};
+
 	const sortChanged = (event) => {
 		const sortingCondition = event.target.value;
 		if (sortingCondition != "") {
@@ -143,7 +153,6 @@ const ProductsCategory = (props) => {
 			if (sortingCondition == "ascending") {
 				sortedArr = ascendingSort(allProducts.products);
 			} else {
-				//descending sort algorithm
 				sortedArr = descendingSort(allProducts.products);
 			}
 			setAllProducts((prev) => {

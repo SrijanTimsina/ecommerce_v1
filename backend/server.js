@@ -4,8 +4,6 @@ const connectDb = require("./db/dbconnect");
 const { createServer } = require("http");
 const multer = require("multer");
 const socketio = require("./socket");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDoc = require("./documentation/swaggerSetup");
 const cookieParser = require("cookie-parser");
 var cors = require("cors");
 
